@@ -64,6 +64,6 @@ if __name__ == "__main__":
         for y in range(grid_height):
             color = color_from_noise(x, y, grid)  # Pass the grid parameter
             grid.setCell(x, y, fill=color)
-    save_grid_to_csv(grid, 'grid_colors.csv')
+    save_grid_to_csv(grid, 'save.csv')
 
     tk.mainloop()
