@@ -4,6 +4,41 @@ from tkinter import Tk, Button
 from hexagonal_grid import HexagonalGrid
 import csv
 
+def get_tile_content_from_csv(filename, x, y):
+    with open(filename, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            # Assuming the CSV format is x,y,number
+            if len(row) == 4:
+                csv_x, csv_y, number, _ = map(int, row)
+                if csv_x == x and csv_y == y:
+                    return number
+    # Return None if the tile is not found
+    return None
+def spawn_unit(filename):
+    check_x =5
+    check_y =13
+    while True:
+        tile_content = get_tile_content_from_csv(filename, check_x, check_y)
+        if tile_content == 2:
+            print(check_y)
+            row_index = check_y * 50 + check_x - 1    
+            with open(filename, 'r', newline='') as csvfile:
+                rows = list(csv.reader(csvfile))
+            if 0 <= row_index < len(rows):
+                row = rows[row_index]
+                if len(row) == 4:
+                    row[2] = '2'
+                    row[3] = '1'
+            with open(filename, 'w', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerows(rows)
+
+            return()
+        elif check_y > 1:
+            check_y -=1
+        else:
+            check_y = 25
 def color_to_number(color):
     if color == 'blue':
         return 0
@@ -14,18 +49,17 @@ def color_to_number(color):
     elif color == 'grey':
         return 3
     else:
-        return -1  # Return -1 for unknown colors
+        return None  # Return None for unknown colors
 
 def save_grid_to_csv(grid, filename):
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for y in range(grid_height):
-            row = []
             for x in range(grid_width):
                 color = grid.getFill(x, y)
                 number = color_to_number(color)
-                row.append(number)
-            writer.writerow(row)
+                writer.writerow([x, y, number, 0])  # Pass individual elements
+
 
 
 # Color mapping based on Perlin noise value and surrounding tiles
@@ -45,7 +79,8 @@ def color_from_noise(x, y, grid):
 
 if __name__ == "__main__":
     tk = Tk()
-
+    
+    saveFile='save.csv'
     scale = 20  # Adjust the scale of the hexagons as needed
     grid_width = 50  # Number of hexagons wide
     grid_height = 25  # Number of hexagons tall
@@ -64,6 +99,8 @@ if __name__ == "__main__":
         for y in range(grid_height):
             color = color_from_noise(x, y, grid)  # Pass the grid parameter
             grid.setCell(x, y, fill=color)
-    save_grid_to_csv(grid, 'save.csv')
+    save_grid_to_csv(grid, saveFile)
+
+    spawn_unit(saveFile)
 
     tk.mainloop()

@@ -13,10 +13,12 @@ def number_to_color(number):
         return None  # Return None for unknown numbers
 
 def load_grid_from_csv(grid, filename):
-    with open(filename, 'r', newline='') as csvfile:
+    with open(filename, 'r') as csvfile:
         reader = csv.reader(csvfile)
-        for y, row in enumerate(reader):
-            for x, number in enumerate(row):
-                color = number_to_color(int(number))
+        for row in reader:
+            # Assuming the CSV format is x,y,number,unused
+            if len(row) == 4:
+                x, y, number, _ = map(int, row)
+                color = number_to_color(number)
                 if color is not None:
                     grid.setCell(x, y, fill=color)

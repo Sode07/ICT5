@@ -110,29 +110,3 @@ class HexagonalGrid(HexaCanvas):
     def getFill(self, xCell, yCell):
         """ Retrieve the fill color of the hexagon at coordinates xCell, yCell """
         return self.hexagon_colors.get((xCell, yCell), None)
-
-    
-if __name__ == "__main__":
-    tk = Tk()
-
-    grid = HexagonalGrid(tk, scale = 50, grid_width=4, grid_height=4)
-    grid.grid(row=0, column=0, padx=5, pady=5)
-
-    def correct_quit(tk):
-        tk.destroy()
-        tk.quit()
-
-    quit = Button(tk, text = "Quit", command = lambda :correct_quit(tk))
-    quit.grid(row=1, column=0)
-
-    grid.setCell(0,0, fill='blue')
-    grid.setCell(1,0, fill='red')
-    grid.setCell(0,1, fill='green')
-    grid.setCell(1,1, fill='yellow')
-    grid.setCell(2,0, fill='cyan')
-    grid.setCell(0,2, fill='teal')
-    grid.setCell(2,1, fill='silver')
-    grid.setCell(1,2, fill='white')
-    grid.setCell(2,2, fill='gray')
-
-    tk.mainloop()
