@@ -11,7 +11,7 @@ class HexaCanvas(Canvas):
         self.hexaSize = number
     
     
-    def create_hexagone(self, x, y, color = "black", fill="blue", color1=None, color2=None, color3=None, color4=None, color5=None, color6=None):
+    def create_hexagone(self, x, y, color="black", fill="blue", color1=None, color2=None, color3=None, color4=None, color5=None, color6=None):
         """ 
         Compute coordinates of 6 points relative to a center position.
         Point are numbered following this schema :
@@ -51,7 +51,7 @@ class HexaCanvas(Canvas):
         point5 = (x-Δx, y+size/2)
         point6 = (x   , y+size  )
     
-        #this setting allow to specify a different color for each side.
+        # This setting allows specifying a different color for each side.
         if color1 == None:
             color1 = color
         if color2 == None:
@@ -85,24 +85,32 @@ class HexagonalGrid(HexaCanvas):
 
         HexaCanvas.__init__(self, master, background='white', width=width, height=height, *args, **kwargs)
         self.setHexaSize(scale)
-    
-    def setCell(self, xCell, yCell, *args, **kwargs ):
-        """ Create a content in the cell of coordinates x and y. Could specify options throught keywords : color, fill, color1, color2, color3, color4; color5, color6"""
-    
-        #compute pixel coordinate of the center of the cell:
+
+        # Store the fill colors of each hexagon in a dictionary
+        self.hexagon_colors = {}
+
+    def setCell(self, xCell, yCell, fill=None, *args, **kwargs):
+        """ Create a content in the cell of coordinates x and y. Could specify options through keywords : color, fill, color1, color2, color3, color4; color5, color6"""
+        # compute pixel coordinate of the center of the cell:
         size = self.hexaSize
         Δx = (size**2 - (size/2)**2)**0.5
     
         pix_x = Δx + 2*Δx*xCell
-        if yCell%2 ==1 :
+        if yCell%2 == 1 :
             pix_x += Δx
     
         # Add 5 to avoid clipping on top row of hexes
         pix_y = size + yCell*1.5*size + 5
     
-        self.create_hexagone(pix_x, pix_y, *args, **kwargs)
+        self.create_hexagone(pix_x, pix_y, fill=fill, *args, **kwargs)
+
+        # Store the fill color of the hexagon
+        self.hexagon_colors[(xCell, yCell)] = fill
     
-    
+    def getFill(self, xCell, yCell):
+        """ Retrieve the fill color of the hexagon at coordinates xCell, yCell """
+        return self.hexagon_colors.get((xCell, yCell), None)
+
     
 if __name__ == "__main__":
     tk = Tk()
