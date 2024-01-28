@@ -2,6 +2,8 @@ import tkinter as tk
 root = tk.Tk()
 def play_game():
     # Add code to start the game here
+    root.destroy()
+    import game
     print("Starting game...")
 
 def exit_game():

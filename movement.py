@@ -1,6 +1,9 @@
 import csv
 import load
 import renderer
+import tkinter as Tk
+import gui
+
 xOffset = 1.8
 yOffset = 1.52
 # Global variable to store selected unit position
@@ -27,7 +30,7 @@ def move_unit(event, grid, filename):
             row_index = y * 50 + x  # Calculate the row index
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
-                if len(row) == 4:
+                if len(row) == 5:
                     row[3] = '0'  # Set the unit flag to '0' to indicate no unit
             with open(filename, 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
@@ -38,20 +41,21 @@ def move_unit(event, grid, filename):
                 rows = list(csv.reader(csvfile))
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
-                if len(row) == 4:
+                if len(row) == 5:
                     row[3] = '1'
             with open(filename, 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerows(rows)
             load.load_grid_from_csv(grid, 'save.csv')
             renderer.render_unit(grid, filename)
+            renderer.render_city(grid, filename)
             return
         else:
             print("Invalid move: clicked tile is not adjacent to the selected unit")
     else:
         print("No unit selected")
 
-def select_unit(event, grid, filename):
+def select_unit(event, grid, filename, root):
     global selected_position
     # Get the clicked coordinates
     x = int(event.x / (grid.hexaSize * 3 / xOffset))
@@ -60,8 +64,9 @@ def select_unit(event, grid, filename):
     # Adjust xCell for every other row
     if y % 2 == 1:  # if y is odd
         x = int((event.x - (grid.hexaSize * 3 / xOffset) / 2) / (grid.hexaSize * 3 / xOffset))
-
-    if unit_exists(filename, x, y):
+    if unit_exists(filename, x, y) ==1:
+        gui.settlerUI(root, grid, filename, x, y)
+    if unit_exists(filename, x, y) >= 1:
         print("Unit selected at coordinates:", x, y)
         selected_position = (x, y)  # Save selected unit position
     else:
@@ -86,7 +91,7 @@ def unit_exists(filename, x, y):
     with open(filename, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            if len(row) == 4 and int(row[3]) == 1:
+            if len(row) == 5 and int(row[3]) >= 1:
                 if int(row[0]) == x and int(row[1]) == y:
-                    return True
+                    return 1
     return False

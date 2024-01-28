@@ -9,8 +9,8 @@ def get_tile_content_from_csv(filename, x, y):
         reader = csv.reader(csvfile)
         for row in reader:
             # Assuming the CSV format is x,y,number
-            if len(row) == 4:
-                csv_x, csv_y, number, _ = map(int, row)
+            if len(row) == 5:
+                csv_x, csv_y, number, _, __ = map(int, row)
                 if csv_x == x and csv_y == y:
                     return number
     # Return None if the tile is not found
@@ -27,7 +27,7 @@ def spawn_unit(filename):
                 rows = list(csv.reader(csvfile))
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
-                if len(row) == 4:
+                if len(row) == 5:
                     row[2] = '2'
                     row[3] = '1'
             with open(filename, 'w', newline='') as csvfile:
@@ -58,7 +58,7 @@ def save_grid_to_csv(grid, filename):
             for x in range(grid_width):
                 color = grid.getFill(x, y)
                 number = color_to_number(color)
-                writer.writerow([x, y, number, 0])  # Pass individual elements
+                writer.writerow([x, y, number, 0, 0])  # Pass individual elements
 
 
 
