@@ -2,16 +2,14 @@ import csv
 from csvutils import getRowsFromCsv
 
 def get_current_turn(filename):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows = getRowsFromCsv(filename)
  
     # Extract the current turn number from the 1251st line
     current_turn = int(rows[1250][0]) if rows[1250] else 0  # Assuming the turn number is in the first column
     
     return current_turn
 def get_current_prod(filename):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows = getRowsFromCsv(filename)
 
     # Extract the current turn number from the 1251st line
     current_prod = int(rows[1250][2]) if rows[1250] else 0  # Assuming the turn number is in the third column
@@ -19,8 +17,7 @@ def get_current_prod(filename):
     return current_prod
 
 def getMoney(filename):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows = getRowsFromCsv(filename)
     if int(rows[1250][1]) >= 10:
         rows[1250][1] = str(int(rows[1250][1])-10)
     else:
@@ -31,8 +28,7 @@ def getMoney(filename):
     return True
 
 def write_current_turn(filename, current_turn):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows= getRowsFromCsv(filename)
 
     # Ensure the file has at least 1251 lines
     while len(rows) < 1251:
@@ -51,8 +47,7 @@ def write_current_turn(filename, current_turn):
         writer.writerows(rows)
 def writeMoney(filename, productiom):
     print("Hemuli")
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows = getRowsFromCsv(filename)
     # Modify the 1251st line to include the current turn number, Money, and Production
     if len(rows[1250]) > 0:
         print("Japs")

@@ -48,8 +48,7 @@ def SetSpawn(filename):
         if tile_content == 2:
             print(check_y)
             row_index = check_y * 50 + check_x - 1    
-            with open(filename, 'r', newline='') as csvfile:
-                rows = list(csv.reader(csvfile))
+            rows = getRowsFromCsv(filename)
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
                 if len(row) >= 5:

@@ -75,9 +75,6 @@ def select_unit(event, grid, filename, root):
         selected_position = (x, y)  # Save selected unit position
     if unit_exists(filename, x, y) == 2:
         gui.cityUI(root, grid, filename)
-    if not unit_exists(filename, x, y):
-        selected_position = None  # Reset selected unit position if no unit is selected
-        print("Unit deselected")
 
 def is_within_grid_bounds(grid, x, y):
     """Check if the given coordinates are within the grid boundaries."""
