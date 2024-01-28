@@ -88,11 +88,10 @@ def get_adjacent_tiles(xCell, yCell):
     """Get the coordinates of adjacent tiles in a hexagonal grid."""
     adjacent_tiles = []
     if yCell % 2 == 0:  # if yCell is even
-        adjacent_tiles = [(xCell - 1, yCell), (xCell - 1, yCell - 1), (xCell, yCell - 1),
-                          (xCell + 1, yCell - 1), (xCell + 1, yCell), (xCell, yCell + 1)]
+        adjacent_tiles = [(xCell-1, yCell), (xCell+1, yCell), (xCell, yCell-1), (xCell, yCell+1), (xCell-1, yCell+1), (xCell-1, yCell-1)]
+
     else:  # if yCell is odd
-        adjacent_tiles = [(xCell - 1, yCell), (xCell, yCell - 1), (xCell + 1, yCell),
-                          (xCell + 1, yCell + 1), (xCell, yCell + 1), (xCell - 1, yCell + 1)]
+        adjacent_tiles = [(xCell-1, yCell), (xCell+1, yCell), (xCell, yCell-1), (xCell, yCell+1), (xCell+1, yCell+1), (xCell+1, yCell-1)]
     return adjacent_tiles
 
 def unit_exists(filename, x, y):
