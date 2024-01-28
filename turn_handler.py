@@ -23,6 +23,10 @@ def write_current_turn(filename, current_turn):
     with open(filename, 'r', newline='') as csvfile:
         rows = list(csv.reader(csvfile))
 
+    # Ensure the file has at least 1251 lines
+    while len(rows) < 1251:
+        rows.append([])  # Append empty rows until reaching the desired line
+
     # Modify the 1251st line to include the current turn number, Money, and Production
     if len(rows[1250]) > 0:
         rows[1250][0] = str(current_turn)  # Update existing turn number
@@ -41,7 +45,7 @@ def writeMoney(filename, productiom):
     # Modify the 1251st line to include the current turn number, Money, and Production
     if len(rows[1250]) > 0:
         print("Japs")
-        rows[1250][1] = str(productiom + int(rows[1250][1]))  # Update existing turn number    
+        rows[1250][1] = str(productiom + int(rows[1250][2]))  # Update existing turn number    
     # Write the modified data back to the CSV file
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
