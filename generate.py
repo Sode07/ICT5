@@ -4,28 +4,28 @@ from tkinter import Tk, Button
 from hexagonal_grid import HexagonalGrid
 import csv
 import turn_handler
+from csvutils import getRowsFromCsv
 
 def get_tile_content_from_csv(filename, x, y):
-    with open(filename, 'r', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
+    reader = getRowsFromCsv(filename)
+    for row in reader:
             # Assuming the CSV format is x,y,number
-            if len(row) >= 5:  # Check if row has at least 5 elements
-                csv_x, csv_y, number, *_ = map(int, row)  # Use * to handle extra elements
-                if csv_x == x and csv_y == y:
-                    return number
+        if len(row) >= 5:  # Check if row has at least 5 elements
+            csv_x, csv_y, number, *_ = map(int, row)  # Use * to handle extra elements
+            if csv_x == x and csv_y == y:
+                return number
     # Return None if the tile is not found
     return None
+
 def spawn_unit(filename):
     check_x =5
     check_y =13
-    while True:
+    while True: #Hei Sallamaa
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
         if tile_content == 2:
             print(check_y)
-            row_index = check_y * 50 + check_x - 1    
-            with open(filename, 'r', newline='') as csvfile:
-                rows = list(csv.reader(csvfile))
+            row_index = check_y * 50 + check_x - 1
+            rows = getRowsFromCsv(filename)
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
                 if len(row) >= 5:
@@ -63,6 +63,7 @@ def SetSpawn(filename):
             check_y -=1
         else:
             check_y = 25
+
 def color_to_number(color):
     if color == 'blue':
         return 0

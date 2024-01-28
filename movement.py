@@ -2,17 +2,18 @@ import csv
 import load
 import renderer
 import gui
+from csvutils import getRowsFromCsv
 
 xOffset = 1.8
 yOffset = 1.52
 # Global variable to store selected unit position
 selected_position = None
 
-def move_unit(event, grid, filename, currentTurn):
+def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirrä unittii, vaan se ilmottaa "No unit selected"
     global selected_position
 
     if selected_position is not None:
-        row_index = yCell * 50 + xCell    
+        row_index = grid.getIndexFromXY(xCell, yCell)  
         with open(filename, 'r', newline='') as csvfile:
             rows = list(csv.reader(csvfile))
         if 0 <= row_index < len(rows):
@@ -94,21 +95,20 @@ def get_adjacent_tiles(xCell, yCell):
     return adjacent_tiles
 
 def unit_exists(filename, x, y):
-    with open(filename, 'r', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            if len(row) >= 5 and int(row[3]) >= 1:
-                if int(row[0]) == x and int(row[1]) == y and int(row[3]) == 1:
-                    return 3
-                elif int(row[0]) == x and int(row[1]) == y:
-                    return 1        
-            else:
-                if int(row[0]) == x and int(row[1]) == y and int(row[4]) > 0:
-                    return 2
+    reader = getRowsFromCsv(filename)
+    for row in reader:
+        if len(row) >= 5 and int(row[3]) >= 1:
+            if int(row[0]) == x and int(row[1]) == y and int(row[3]) == 1:
+                return 3
+            elif int(row[0]) == x and int(row[1]) == y:
+                return 1        
+        else:
+            if int(row[0]) == x and int(row[1]) == y and int(row[4]) > 0:
+                return 2
     return False
+
 def save_last_moved_turn(filename, x, y, turn):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    rows = getRowsFromCsv(filename)
 
     row_index = y * 50 + x
     if 0 <= row_index < len(rows):

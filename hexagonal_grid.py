@@ -86,6 +86,9 @@ class HexagonalGrid(HexaCanvas):
         HexaCanvas.__init__(self, master, background='white', width=width, height=height, *args, **kwargs)
         self.setHexaSize(scale)
 
+        self.width = grid_width #Grid- ojektin pitäis tietää omat ulottuvuutensa, nii sitä ei tarvi hardcodaa
+        self.height = grid_height
+
         # Store the fill colors of each hexagon in a dictionary
         self.hexagon_colors = {}
 
@@ -110,3 +113,6 @@ class HexagonalGrid(HexaCanvas):
     def getFill(self, xCell, yCell):
         """ Retrieve the fill color of the hexagon at coordinates xCell, yCell """
         return self.hexagon_colors.get((xCell, yCell), None)
+
+    def getIndexFromXY(self,x,y): #hakee indeksin csv-filust nii ei tarvi kirjottaa indeksi = xCell * yCell
+        return y * self.width + x

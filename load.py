@@ -1,4 +1,5 @@
 import csv
+from csvutils import getRowsFromCsv
 
 def number_to_color(number):
     if number == 0:
@@ -15,12 +16,11 @@ def number_to_color(number):
         return None  # Return None for unknown numbers
 
 def load_grid_from_csv(grid, filename):
-    with open(filename, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            if len(row) >= 3:  # Check if row has at least 3 elements
-                x, y, number, *_ = map(int, row)  # Use * to handle extra elements
-                color = number_to_color(number)
-                if color is not None:
-                    grid.setCell(x, y, fill=color)
+    reader = getRowsFromCsv(filename)
+    for row in reader:
+        if len(row) >= 3:  # Check if row has at least 3 elements
+            x, y, number, *_ = map(int, row)  # Use * to handle extra elements
+            color = number_to_color(number)
+            if color is not None:
+                grid.setCell(x, y, fill=color)
 

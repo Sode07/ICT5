@@ -1,4 +1,5 @@
 import csv
+from csvutils import getRowsFromCsv
 
 def get_current_turn(filename):
     with open(filename, 'r', newline='') as csvfile:
