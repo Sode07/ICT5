@@ -2,13 +2,15 @@ import csv
 
 def number_to_color(number):
     if number == 0:
-        return 'blue'
+        return 'blue' #Vesi
     elif number == 1:
-        return 'yellow'
+        return 'yellow' #Aavikko
     elif number == 2:
-        return 'green'
+        return 'green' #Ruoho ruutu
     elif number == 3:
-        return 'grey'
+        return 'grey' #Vuori
+    elif number == 4:
+        return 'cyan' #Spawnpoint
     else:
         return None  # Return None for unknown numbers
 

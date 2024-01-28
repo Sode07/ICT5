@@ -40,6 +40,29 @@ def spawn_unit(filename):
             check_y -=1
         else:
             check_y = 25
+def SetSpawn(filename):
+    check_x =1
+    check_y =13
+    while True:
+        tile_content = get_tile_content_from_csv(filename, check_x, check_y)
+        if tile_content == 2:
+            print(check_y)
+            row_index = check_y * 50 + check_x - 1    
+            with open(filename, 'r', newline='') as csvfile:
+                rows = list(csv.reader(csvfile))
+            if 0 <= row_index < len(rows):
+                row = rows[row_index]
+                if len(row) >= 5:
+                    row[2] = '4'
+            with open(filename, 'w', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerows(rows)
+
+            return()
+        elif check_y > 1:
+            check_y -=1
+        else:
+            check_y = 25
 def color_to_number(color):
     if color == 'blue':
         return 0
@@ -103,5 +126,6 @@ if __name__ == "__main__":
     save_grid_to_csv(grid, saveFile)
 
     spawn_unit(saveFile)
+    SetSpawn(saveFile)
     turn_handler.write_current_turn('save.csv', 1)
     tk.mainloop()
