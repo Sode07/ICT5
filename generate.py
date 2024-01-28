@@ -20,7 +20,7 @@ def get_tile_content_from_csv(filename, x, y):
 def spawn_unit(filename):
     check_x =5
     check_y =13
-    while True: #Hei Sallamaa
+    while True: #Hei Sallasmaa
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
         if tile_content == 2:
             print(check_y)

@@ -2,6 +2,8 @@ import csv
 import load
 import renderer
 import gui
+import production
+import turn_handler
 from csvutils import getRowsFromCsv
 
 def foundCity(grid, filename, xCell, yCell, button, root):
@@ -25,18 +27,25 @@ def foundCity(grid, filename, xCell, yCell, button, root):
     print(checkProduhiton(xCell, yCell, filename))
 
 def ProduceUnit(UnitIndex, buttons, grid, filename, root):
-    if UnitIndex == 0:
-        print("Producing settler")   
-    if UnitIndex == 1:
-        print("Producing Melee")
-    if UnitIndex == 2:
-        print("Producing Ranged")
-    for button in buttons:
-        button.destroy()
-    renderer.render_unit(grid, filename)
-    renderer.render_city(grid, filename)
+    if turn_handler.getMoney(filename):
+        if UnitIndex == 0:
+            print("Producing settler")   
+            production.SpawnUnit(1, filename)
+        if UnitIndex == 1:
+            print("Producing Melee")
+            production.SpawnUnit(2, filename)
+        if UnitIndex == 2:
+            print("Producing Ranged")
+            production.SpawnUnit(3, filename)        
+        for button in buttons:
+            button.destroy()
+        renderer.render_unit(grid, filename)
+        renderer.render_city(grid, filename)
 
-    gui.baseUI(root, filename)
+        gui.baseUI(root, filename)
+
+    else:
+        print("No mone")
 def checkProduhiton(x, y, filename):
     production = 0
     adjacentEven_coords = [(x-1, y), (x+1, y), (x, y-1), (x, y+1), (x-1, y+1), (x-1, y-1)]

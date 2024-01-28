@@ -13,26 +13,25 @@ def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirr√
     global selected_position
 
     if selected_position is not None:
-        row_index = grid.getIndexFromXY(xCell, yCell)  
-        with open(filename, 'r', newline='') as csvfile:
-            rows = list(csv.reader(csvfile))
+        x, y = selected_position
+        hexWidth = grid.hexaSize * 3 / xOffset
+        hexHeight = grid.hexaSize * yOffset
+        xCell = int(event.x / hexWidth)
+        yCell = int(event.y / hexHeight)
+
+        row_index = grid.getIndexFromXY(x, y)  
+        rows = getRowsFromCsv(filename)
         if 0 <= row_index < len(rows):
             row = rows[row_index]
-            if row[5] <= currentTurn:
-                x, y = selected_position
-                hexWidth = grid.hexaSize * 3 / xOffset
-                hexHeight = grid.hexaSize * yOffset
-                xCell = int(event.x / hexWidth)
-                yCell = int(event.y / hexHeight)
+            if int(row[5]) <= currentTurn:
                 # Adjust xCell for every other row
                 if yCell % 2 == 1:  # if yCell is odd
                     xCell = int((event.x - hexWidth / 2) / hexWidth)
 
                 if (xCell, yCell) in get_adjacent_tiles(x, y):
                     print("Moving unit from", x, y, "to", xCell, yCell) 
-                    with open(filename, 'r', newline='') as csvfile:
-                        rows = list(csv.reader(csvfile))
-                    row_index = y * 50 + x  # Calculate the row index
+                    rows = getRowsFromCsv(filename)
+                    row_index = grid.getIndexFromXY(x, y) # Calculate the row index
                     if 0 <= row_index < len(rows):
                         row = rows[row_index]
                         if len(row) >= 5:
@@ -42,9 +41,8 @@ def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirr√
                         writer = csv.writer(csvfile)
                         writer.writerows(rows)
                     
-                    row_index = yCell * 50 + xCell    
-                    with open(filename, 'r', newline='') as csvfile:
-                        rows = list(csv.reader(csvfile))
+                    row_index = grid.getIndexFromXY(xCell, yCell)
+                    rows = getRowsFromCsv(filename)
                     if 0 <= row_index < len(rows):
                         row = rows[row_index]
                         if len(row) >= 5:
@@ -77,8 +75,9 @@ def select_unit(event, grid, filename, root):
         selected_position = (x, y)  # Save selected unit position
     if unit_exists(filename, x, y) == 2:
         gui.cityUI(root, grid, filename)
-    else:
+    if not unit_exists(filename, x, y):
         selected_position = None  # Reset selected unit position if no unit is selected
+        print("Unit deselected")
 
 def is_within_grid_bounds(grid, x, y):
     """Check if the given coordinates are within the grid boundaries."""

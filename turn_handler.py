@@ -18,7 +18,17 @@ def get_current_prod(filename):
     
     return current_prod
 
-import csv
+def getMoney(filename):
+    with open(filename, 'r', newline='') as csvfile:
+        rows = list(csv.reader(csvfile))
+    if int(rows[1250][1]) >= 10:
+        rows[1250][1] = str(int(rows[1250][1])-10)
+    else:
+        return False
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(rows)
+    return True
 
 def write_current_turn(filename, current_turn):
     with open(filename, 'r', newline='') as csvfile:
@@ -46,7 +56,7 @@ def writeMoney(filename, productiom):
     # Modify the 1251st line to include the current turn number, Money, and Production
     if len(rows[1250]) > 0:
         print("Japs")
-        rows[1250][1] = str(productiom + int(rows[1250][2]))  # Update existing turn number    
+        rows[1250][1] = str(productiom + int(rows[1250][1]))  # Update existing turn number    
     # Write the modified data back to the CSV file
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
