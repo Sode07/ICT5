@@ -1,11 +1,12 @@
 import csv
+from csvutils import getRowsFromCsv
 
 def get_current_turn(filename):
-    with open(filename, 'r', newline='') as csvfile:
-        rows = list(csv.reader(csvfile))
+    
+    rows = getRowsFromCsv(filename)
         
     # Ensure there are at least 1251 lines in the file
-    while len(rows) < 1251:
+    while len(rows) < 1251: #laatu
         rows.append([])  # Append empty rows until reaching the desired line
         
     # Extract the current turn number from the 1251st line

@@ -8,6 +8,7 @@ def baseUI(root, filename):
 
     EndTurnButton = tk.Button(button_frame, text="End Turn", command=lambda: TH.endTurn(filename))
     EndTurnButton.grid(row=0, column=0, padx=10, pady=10)
+    
 def settlerUI(root, grid, filename, xCell, yCell):
     button_frame = tk.Frame(root)
     button_frame.grid(row=1, column=1)  # Example row and column numbers
