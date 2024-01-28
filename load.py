@@ -16,9 +16,9 @@ def load_grid_from_csv(grid, filename):
     with open(filename, 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            # Assuming the CSV format is x,y,number,unused
-            if len(row) == 5:
-                x, y, number, _, __ = map(int, row)
+            if len(row) >= 3:  # Check if row has at least 3 elements
+                x, y, number, *_ = map(int, row)  # Use * to handle extra elements
                 color = number_to_color(number)
                 if color is not None:
                     grid.setCell(x, y, fill=color)
+
