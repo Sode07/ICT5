@@ -9,18 +9,17 @@ yOffset = 1.52
 # Global variable to store selected unit position
 selected_position = None
 
-def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirrä unittii, vaan se ilmottaa "No unit selected"
+def move_unit(event, grid, filename, currentTurn, root): #move unit ei oikeesti siirrä unittii, vaan se ilmottaa "No unit selected"
     global selected_position
-
     if selected_position is not None:
         x, y = selected_position
         hexWidth = grid.hexaSize * 3 / xOffset
         hexHeight = grid.hexaSize * yOffset
         xCell = int(event.x / hexWidth)
         yCell = int(event.y / hexHeight)
-
         row_index = grid.getIndexFromXY(x, y)  
         rows = getRowsFromCsv(filename)
+        gui.settlerUI(root, grid, filename, x, y, 0)
         if 0 <= row_index < len(rows):
             row = rows[row_index]
             if int(row[5]) <= currentTurn:
@@ -69,7 +68,7 @@ def select_unit(event, grid, filename, root):
     if y % 2 == 1:  # if y is odd
         x = int((event.x - (grid.hexaSize * 3 / xOffset) / 2) / (grid.hexaSize * 3 / xOffset))
     if unit_exists(filename, x, y) == 3:
-        gui.settlerUI(root, grid, filename, x, y)
+        gui.settlerUI(root, grid, filename, x, y, 1)
     if unit_exists(filename, x, y) >= 1:
         print("Unit selected at coordinates:", x, y)
         selected_position = (x, y)  # Save selected unit position

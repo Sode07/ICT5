@@ -77,5 +77,4 @@ def checkProduhiton(x, y, filename):
         writer.writerows(rows)
     return production
 
-    gui.baseUI(root, filename)
 

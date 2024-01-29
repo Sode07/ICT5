@@ -22,6 +22,6 @@ renderer.render_city(grid, filename)
 # Bind the canvas to the select_unit function
 grid.bind("<Button-1>", lambda event: movement.select_unit(event, grid, filename, root))
 # Bind the right-click event to the move_unit function
-grid.bind("<Button-3>", lambda event: movement.move_unit(event, grid, filename, turn_handler.get_current_turn(filename)))
+grid.bind("<Button-3>", lambda event: movement.move_unit(event, grid, filename, turn_handler.get_current_turn(filename), root))
 # Run Tkinter event loop
 root.mainloop()
