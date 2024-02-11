@@ -2,7 +2,8 @@ import csv
 import load
 import renderer
 import gui
-from csvutils import getRowsFromCsv
+import csv_handler
+csv_obj = csv_handler.CSV('save.csv')  # Luodaan csv luokka
 
 xOffset = 1.8
 yOffset = 1.52
@@ -24,7 +25,7 @@ def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
         hexHeight = grid.hexaSize * yOffset
         xCell = int(event.x / hexWidth)
         yCell = int(event.y / hexHeight)
-        world = getRowsFromCsv(filename)
+        world = csv_obj.get_array()
 
         row_index = grid.getIndexFromXY(x, y)  
         if 0 <= row_index < len(world):
@@ -95,7 +96,7 @@ def get_adjacent_tiles(xCell, yCell):
     return adjacent_tiles
 
 def unit_exists(filename, x, y):
-    reader = getRowsFromCsv(filename)
+    reader = csv_obj.get_array()
     for row in reader:
         if len(row) >= 5 and int(row[3]) >= 1:
             if int(row[0]) == x and int(row[1]) == y and int(row[3]) == 1:
@@ -108,7 +109,7 @@ def unit_exists(filename, x, y):
     return False
 
 def save_last_moved_turn(filename, x, y, turn):
-    rows = getRowsFromCsv(filename)
+    rows = csv_obj.get_array()
 
     row_index = y * 50 + x
     if 0 <= row_index < len(rows):
