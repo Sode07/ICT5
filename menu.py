@@ -62,3 +62,5 @@ def options():
     fullscreen_button.grid(row=0, column=0, padx=10, pady=10)
     mute_button.grid(row=1, column=0, padx=10, pady=10)
     back_button.grid(row=2, column=0, padx=10, pady=10)
+if __name__ == "__main__":
+    main()

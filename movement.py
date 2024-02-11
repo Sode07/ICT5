@@ -14,7 +14,7 @@ yOffset = 1.52
 # Global variable to store selected unit position
 selected_position = None
 
-def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
+def move_unit(event, grid, filename, currentTurn, root): #TODO korjaa tämä
     global selected_position
     
     snapshot = tracemalloc.take_snapshot()
@@ -70,6 +70,7 @@ def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
                     load.load_grid_from_csv(grid, 'save.csv')
                     renderer.render_unit(grid, filename)
                     renderer.render_city(grid, filename)
+                    root.destroy()
                     return
                 else:
                     print("Invalid move: clicked tile is not adjacent to the selected unit")

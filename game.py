@@ -5,11 +5,13 @@ import renderer
 import movement
 import gui
 import turn_handler
+import os
+
 filename = "save.csv"
 
 # Create Tkinter window
 root = tk.Tk()
-"""root.attributes('-fullscreen', True)"""
+root.attributes('-fullscreen', True)
 # Create HexagonalGrid instance
 grid = HexagonalGrid(root, scale=20, grid_width=50, grid_height=25)
 grid.grid(row=0, column=0, padx=5, pady=5)
@@ -22,6 +24,8 @@ renderer.render_city(grid, filename)
 # Bind the canvas to the select_unit function
 grid.bind("<Button-1>", lambda event: movement.select_unit(event, grid, filename, root))
 # Bind the right-click event to the move_unit function
-grid.bind("<Button-3>", lambda event: movement.move_unit(event, grid, filename, turn_handler.get_current_turn(filename)))
+grid.bind("<Button-3>", lambda event: movement.move_unit(event, grid, filename, turn_handler.get_current_turn(filename), root))
 # Run Tkinter event loop
 root.mainloop()
+while True:
+    os.system("python game.py")
