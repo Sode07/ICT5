@@ -9,7 +9,7 @@ yOffset = 1.52
 # Global variable to store selected unit position
 selected_position = None
 
-def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirr채 unittii, vaan se ilmottaa "No unit selected"
+def move_unit(event, grid, filename, currentTurn): #TODO korjaa t채m채
     global selected_position
 
     if selected_position is not None:
@@ -18,11 +18,11 @@ def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirr�
         hexHeight = grid.hexaSize * yOffset
         xCell = int(event.x / hexWidth)
         yCell = int(event.y / hexHeight)
+        world = getRowsFromCsv(filename)
 
         row_index = grid.getIndexFromXY(x, y)  
-        rows = getRowsFromCsv(filename)
-        if 0 <= row_index < len(rows):
-            row = rows[row_index]
+        if 0 <= row_index < len(world):
+            row = world[row_index]
             if int(row[5]) <= currentTurn:
                 # Adjust xCell for every other row
                 if yCell % 2 == 1:  # if yCell is odd
@@ -30,26 +30,24 @@ def move_unit(event, grid, filename, currentTurn): #move unit ei oikeesti siirr�
 
                 if (xCell, yCell) in get_adjacent_tiles(x, y):
                     print("Moving unit from", x, y, "to", xCell, yCell) 
-                    rows = getRowsFromCsv(filename)
                     row_index = grid.getIndexFromXY(x, y) # Calculate the row index
-                    if 0 <= row_index < len(rows):
-                        row = rows[row_index]
+                    if 0 <= row_index < len(world): #en tii채 mit채 t채채 tekee mut en viiti koskee siihe
+                        row = world[row_index]
                         if len(row) >= 5:
                             row[3] = '0'  # Set the unit flag to '0' to indicate no unit
                             row[5] = currentTurn
                     with open(filename, 'w', newline='') as csvfile:
                         writer = csv.writer(csvfile)
-                        writer.writerows(rows)
+                        writer.writerows(world)
                     
                     row_index = grid.getIndexFromXY(xCell, yCell)
-                    rows = getRowsFromCsv(filename)
-                    if 0 <= row_index < len(rows):
-                        row = rows[row_index]
+                    if 0 <= row_index < len(world):#t채채 saattais toimii ilmanki t채k채 chekki채. s채채stett채is pari syklii
+                        row = world[row_index]
                         if len(row) >= 5:
                             row[3] = '1'
                     with open(filename, 'w', newline='') as csvfile:
                         writer = csv.writer(csvfile)
-                        writer.writerows(rows)
+                        writer.writerows(world)
                     load.load_grid_from_csv(grid, 'save.csv')
                     renderer.render_unit(grid, filename)
                     renderer.render_city(grid, filename)
