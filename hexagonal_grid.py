@@ -1,6 +1,7 @@
 from tkinter import *
 
 class HexaCanvas(Canvas):
+    print("sika")
     """ A canvas that provides a create-hexagone method """
     def __init__(self, master, *args, **kwargs):
         Canvas.__init__(self, master, *args, **kwargs)
@@ -76,6 +77,7 @@ class HexaCanvas(Canvas):
             self.create_polygon(point1, point2, point3, point4, point5, point6, fill=fill)
     
 class HexagonalGrid(HexaCanvas):
+    print("kettu")
     """ A grid whose each cell is hexagonal """
     def __init__(self, master, scale, grid_width, grid_height, *args, **kwargs):
     

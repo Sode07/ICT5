@@ -3,6 +3,10 @@ import load
 import renderer
 import gui
 import csv_handler
+import tracemalloc
+
+tracemalloc.start()
+
 csv_obj = csv_handler.CSV('save.csv')  # Luodaan csv luokka
 
 xOffset = 1.8
@@ -12,6 +16,13 @@ selected_position = None
 
 def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
     global selected_position
+    
+    snapshot = tracemalloc.take_snapshot()
+    top_stats = snapshot.statistics('lineno')
+
+    print("[ Top 10 ]")
+    for stat in top_stats[:10]:
+        print(stat)
 
     if selected_position is not None:
 
