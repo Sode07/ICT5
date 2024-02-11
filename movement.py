@@ -54,6 +54,7 @@ def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
                     with open(filename, 'w', newline='') as csvfile:
                         writer = csv.writer(csvfile)
                         writer.writerows(world)
+                        csv_obj.invalidate_cache()
 
                     load.load_grid_from_csv(grid, 'save.csv')
                     renderer.render_unit(grid, filename)
