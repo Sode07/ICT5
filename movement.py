@@ -13,7 +13,13 @@ def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
     global selected_position
 
     if selected_position is not None:
+
         x, y = selected_position
+
+        if unit_exists(filename, x, y) == 2: #joutuu lukee csv uudellee vois fiksaa joskus
+            print("can't move a city")
+            return
+
         hexWidth = grid.hexaSize * 3 / xOffset
         hexHeight = grid.hexaSize * yOffset
         xCell = int(event.x / hexWidth)
@@ -36,18 +42,18 @@ def move_unit(event, grid, filename, currentTurn): #TODO korjaa tämä
                         if len(row) >= 5:
                             row[3] = '0'  # Set the unit flag to '0' to indicate no unit
                             row[5] = currentTurn
-                    with open(filename, 'w', newline='') as csvfile:
-                        writer = csv.writer(csvfile)
-                        writer.writerows(world)
                     
                     row_index = grid.getIndexFromXY(xCell, yCell)
+
                     if 0 <= row_index < len(world):#tää saattais toimii ilmanki täkä chekkiä. säästettäis pari syklii
                         row = world[row_index]
                         if len(row) >= 5:
                             row[3] = '1'
+
                     with open(filename, 'w', newline='') as csvfile:
                         writer = csv.writer(csvfile)
                         writer.writerows(world)
+
                     load.load_grid_from_csv(grid, 'save.csv')
                     renderer.render_unit(grid, filename)
                     renderer.render_city(grid, filename)
@@ -93,12 +99,12 @@ def unit_exists(filename, x, y):
     for row in reader:
         if len(row) >= 5 and int(row[3]) >= 1:
             if int(row[0]) == x and int(row[1]) == y and int(row[3]) == 1:
-                return 3
+                return 3 #???????????????
             elif int(row[0]) == x and int(row[1]) == y:
-                return 1        
+                return 1 #unit       
         else:
             if int(row[0]) == x and int(row[1]) == y and int(row[4]) > 0:
-                return 2
+                return 2 #kaupunki
     return False
 
 def save_last_moved_turn(filename, x, y, turn):
