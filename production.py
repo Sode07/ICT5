@@ -1,7 +1,8 @@
 import csv
-
+import csv_handler
+csv_obj = csv_handler.CSV('save.csv') 
 def SpawnUnit(type, filename):
-    rows = getRowsFromCsv(filename)
+    rows = csv_obj.get_array()
     
     for row in rows:
         print(row)
