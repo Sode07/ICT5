@@ -1,4 +1,6 @@
 import tkinter as tk
+import winsound
+winsound.PlaySound('menu.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
 root = tk.Tk()
 
 def play_game():
