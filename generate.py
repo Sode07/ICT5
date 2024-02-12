@@ -18,7 +18,7 @@ def get_tile_content_from_csv(filename, x, y):
     return None
 
 def spawn_unit(filename):
-    check_x =5
+    check_x =1
     check_y =13
     while True: #Hei Sallasmaa
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
@@ -41,7 +41,7 @@ def spawn_unit(filename):
         else:
             check_y = 25
 def SetSpawn(filename):
-    check_x =1
+    check_x =50
     check_y =13
     while True:
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)

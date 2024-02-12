@@ -12,6 +12,9 @@ filename = "save.csv"
 # Create Tkinter window
 root = tk.Tk()
 root.attributes('-fullscreen', True)
+background_image = tk.PhotoImage(file="tausta.png")
+background_label = tk.Label(root, image=background_image)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
 # Create HexagonalGrid instance
 grid = HexagonalGrid(root, scale=20, grid_width=50, grid_height=25)
 grid.grid(row=0, column=0, padx=5, pady=5)

@@ -18,6 +18,7 @@ def toggle_fullscreen():
 def mute_window():
     # Mute the window (toggle the sound)
     # Implement your logic to mute/unmute the window
+    winsound.PlaySound(None, winsound.SND_PURGE)
     print("Window muted/unmuted")
 
 def show_options():
@@ -28,7 +29,12 @@ def main():
     for widget in root.winfo_children():
         widget.destroy()
     # Create the Tkinter window 
-    root.attributes("-fullscreen", True)  # Set full screen
+    """root.attributes("-fullscreen", True)  # Set full screen"""
+    background_image = tk.PhotoImage(file="menu.png")
+    # Resize the image to fit the window
+    background_image = background_image.subsample(background_image.width() // root.winfo_screenwidth(), background_image.height() // root.winfo_screenheight())
+    background_label = tk.Label(root, image=background_image)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
     # Create a frame for the buttons
     button_frame = tk.Frame(root)
