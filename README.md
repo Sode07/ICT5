@@ -22,10 +22,15 @@ git clone https://github.com/Sode07/ICT5/ at your preferred folder
 -------------------------
 The source code version of Jahuyk requires:
   -Pentium(tm) computer
+  
   -As much as you can get of RAM
+  
   -Operating system
+  
   -Monitor and video card capable of displaying colors
+  
   -Mouse
+  
   -some hard drive space (plus space for save games)
 
 To View the Manual - Locally
