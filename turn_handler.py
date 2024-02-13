@@ -16,7 +16,7 @@ def get_current_prod(filename):
     
     return current_prod
 
-def getMoney(filename):
+def getMoney(filename):#miks tää palauttaa totuusarvon :D
     rows = getRowsFromCsv(filename)
     if int(rows[1250][1]) >= 10:
         rows[1250][1] = str(int(rows[1250][1])-10)
@@ -25,7 +25,15 @@ def getMoney(filename):
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(rows)
-    return True
+    return True #<- this is stupid
+
+def getMoneyActual(filename): #tää on tässä siksi, koska getMoney() on tyhmä
+    rows = getRowsFromCsv(filename)
+    japs = int(rows[1250][1])
+    if type(japs) == None:
+        return 0
+    else:
+        return japs
 
 def write_current_turn(filename, current_turn):
     rows= getRowsFromCsv(filename)

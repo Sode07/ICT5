@@ -7,6 +7,7 @@ import gui
 import turn_handler
 import os
 from PIL import Image
+from checkwinstate import voitto
 
 def get_screen_size():
     root = tk.Tk()
@@ -45,9 +46,11 @@ scale_image_to_screen(input_path, output_path)
 a = 1
 
 def b():
+    print("peli tuhottu")
+    os.system("python win.py")
     global a
     a = 0
-    quit()
+    exit()
 filename = "save.csv"
 
 # Create Tkinter window
@@ -76,5 +79,7 @@ QuitButton = tk.Button(button_frame, text="Quit", command=lambda: b())
 QuitButton.grid(row=0, column=0, padx=10, pady=10)
 root.mainloop()
 while a:
+    if voitto(filename, 2,13):
+        b()
     print(a)
     os.system("python game.py")

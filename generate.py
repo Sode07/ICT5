@@ -5,6 +5,7 @@ from hexagonal_grid import HexagonalGrid
 import csv
 import turn_handler
 from csvutils import getRowsFromCsv
+from random import randint
 
 scaleX = 0.05*random.uniform(0.9,1.1)
 scaleY = 0.05*random.uniform(0.1,0.5)
@@ -101,6 +102,9 @@ def SetSpawn(filename):
             check_y -=1
         else:
             check_y = 25
+
+def SetWinTile(filename):
+    tile_content = get_tile_content_from_csv(filename, check_x, check_y)
 
 def color_to_number(color):
     if color == 'blue':
