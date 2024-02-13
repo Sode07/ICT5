@@ -1,4 +1,4 @@
-﻿
+
 Jahyluyk: A race against your computer
 Readme File - 11 February 2024
 Version 1.0
