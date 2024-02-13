@@ -32,7 +32,7 @@ def scale_image_to_screen(input_image_path, output_image_path):
     resized_image.save(output_image_path)
 
 # Example usage
-input_path = "menu.png"
+input_path = "menu.webp"
 output_path = "meny.png"
 
 scale_image_to_screen(input_path, output_path)

@@ -19,14 +19,11 @@ def get_screen_size():
 def scale_image_to_screen(input_image_path, output_image_path):
     screen_width, screen_height = get_screen_size()
     
-    # Open the input image
+    # Open the input img
     image = Image.open(input_image_path)
-    
-    # Calculate scaling factors for width and height
+    #Calc img future size
     scale_factor_width = screen_width / image.width
     scale_factor_height = screen_height / image.height
-    
-    # Choose the smaller scaling factor to fit the image on screen
     scale_factor = min(scale_factor_width, scale_factor_height)
     
     # Resize the image
@@ -37,8 +34,7 @@ def scale_image_to_screen(input_image_path, output_image_path):
     # Save the resized image
     resized_image.save(output_image_path)
 
-# Example usage
-input_path = "tausta.png"
+input_path = "tausta.webp"
 output_path = "peli.png"
 
 scale_image_to_screen(input_path, output_path)
@@ -47,10 +43,12 @@ a = 1
 
 def b():
     print("peli tuhottu")
-    os.system("python win.py")
     global a
     a = 0
     exit()
+def c():
+    os.system("python win.py")
+    b()
 filename = "save.csv"
 
 # Create Tkinter window
@@ -77,9 +75,9 @@ grid.bind("<Button-3>", lambda event: movement.move_unit(event, grid, filename, 
 # Run Tkinter event loop
 QuitButton = tk.Button(button_frame, text="Quit", command=lambda: b())
 QuitButton.grid(row=0, column=0, padx=10, pady=10)
+if voitto(filename, 45,11, 45, 13):
+    c()
 root.mainloop()
 while a:
-    if voitto(filename, 45,13):
-        b()
     print(a)
     os.system("python game.py")
