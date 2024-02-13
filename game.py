@@ -79,7 +79,7 @@ QuitButton = tk.Button(button_frame, text="Quit", command=lambda: b())
 QuitButton.grid(row=0, column=0, padx=10, pady=10)
 root.mainloop()
 while a:
-    if voitto(filename, 2,13):
+    if voitto(filename, 45,13):
         b()
     print(a)
     os.system("python game.py")

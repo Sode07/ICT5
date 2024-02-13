@@ -41,6 +41,7 @@ root = tk.Tk()
 
 def play_game():
     print("Starting game...")
+    winsound.PlaySound(None, winsound.SND_PURGE)
     root.destroy()
     import game
 
