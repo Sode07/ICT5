@@ -113,11 +113,12 @@ def unit_exists(filename, x, y):
     for row in reader:
         if len(row) >= 5 and int(row[3]) >= 1:
             if int(row[0]) == x and int(row[1]) == y and int(row[3]) == 1:
-                return 3 #???????????????
+                return 3 #??????????????? se o setler jussi
             elif int(row[0]) == x and int(row[1]) == y:
                 return 1 #unit       
         else:
             if int(row[0]) == x and int(row[1]) == y and int(row[4]) > 0:
+                print("2")
                 return 2 #kaupunki
     return False
 
