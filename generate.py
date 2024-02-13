@@ -6,6 +6,21 @@ import csv
 import turn_handler
 from csvutils import getRowsFromCsv
 
+scaleX = 0.05*random.uniform(0.9,1.1)
+scaleY = 0.05*random.uniform(0.1,0.5)
+mountain = -0.8
+desert = 0.3
+grass = 0.2
+
+def Continents():
+    return
+def Desert():
+    return
+def Hills():
+    return
+def Ocean():
+    return
+
 def get_tile_content_from_csv(filename, x, y):
     reader = getRowsFromCsv(filename)
     for row in reader:
@@ -41,7 +56,7 @@ def spawn_unit(filename):
         else:
             check_y = 25
 def SetSpawn(filename):
-    check_x =50
+    check_x =1
     check_y =13
     while True:
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
@@ -87,15 +102,14 @@ def save_grid_to_csv(grid, filename):
 
 
 # Color mapping based on Perlin noise value and surrounding tiles
-def color_from_noise(x, y, grid):
-    scale = 0.05  # Adjust the scale to control the noise frequency
-    noise_value = (noise.perlin(x * scale*random.uniform(0.9,1.1), y * scale*random.uniform(0.1,0.5), 500, 500)-0.33)*2
+def color_from_noise(x, y):
+    noise_value = (noise.perlin(x * scaleX, y * scaleY, 500, 500)-0.33)*2
     # Return the original color based on noise value
-    if noise_value < -0.8:
+    if noise_value < mountain:
         return 'grey'
-    elif noise_value < 0.2:
+    elif noise_value < grass:
         return 'green'
-    elif noise_value < 0.3:
+    elif noise_value < desert:
         return 'yellow'
     else:
         return 'blue'
@@ -121,7 +135,7 @@ if __name__ == "__main__":
 
     for x in range(grid_width):
         for y in range(grid_height):
-            color = color_from_noise(x, y, grid)  # Pass the grid parameter
+            color = color_from_noise(x, y)  # Pass the grid parameter
             grid.setCell(x, y, fill=color)
     save_grid_to_csv(grid, saveFile)
 

@@ -1,5 +1,40 @@
 import tkinter as tk
 import winsound
+from PIL import Image
+
+def get_screen_size():
+    root = tk.Tk()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.destroy()
+    return screen_width, screen_height
+
+def scale_image_to_screen(input_image_path, output_image_path):
+    screen_width, screen_height = get_screen_size()
+    
+    # Open the input image
+    image = Image.open(input_image_path)
+    
+    # Calculate scaling factors for width and height
+    scale_factor_width = screen_width / image.width
+    scale_factor_height = screen_height / image.height
+    
+    # Choose the smaller scaling factor to fit the image on screen
+    scale_factor = min(scale_factor_width, scale_factor_height)
+    
+    # Resize the image
+    new_width = int(image.width * scale_factor)
+    new_height = int(image.height * scale_factor)
+    resized_image = image.resize((new_width, new_height))
+    
+    # Save the resized image
+    resized_image.save(output_image_path)
+
+# Example usage
+input_path = "menu.png"
+output_path = "meny.png"
+
+scale_image_to_screen(input_path, output_path)
 winsound.PlaySound('menu.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
 root = tk.Tk()
 
@@ -29,8 +64,8 @@ def main():
     for widget in root.winfo_children():
         widget.destroy()
     # Create the Tkinter window 
-    """root.attributes("-fullscreen", True)  # Set full screen"""
-    background_image = tk.PhotoImage(file="menu.png")
+    root.attributes("-fullscreen", True)  # Set full screen
+    background_image = tk.PhotoImage(file="meny.png")
     # Resize the image to fit the window
     background_image = background_image.subsample(background_image.width() // root.winfo_screenwidth(), background_image.height() // root.winfo_screenheight())
     background_label = tk.Label(root, image=background_image)
