@@ -1,5 +1,4 @@
 import tkinter as tk
-import csv
 from csvutils import getRowsFromCsv
 
 def render_unit(grid, filename):

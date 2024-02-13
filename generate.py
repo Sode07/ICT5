@@ -18,6 +18,18 @@ grid_height = 25  # Number of hexagons tall
 
 def Continents():
     print("Cont")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 0.5
+    grass = 0.2
+    homeTile = 2
     main()
     return
 def Desert():
@@ -31,17 +43,41 @@ def Desert():
     scaleX = 0.05*random.uniform(0.9,1.1)
     scaleY = 0.05*random.uniform(0.1,0.5)
     mountain = -0.8
-    desert = 0.999
-    grass = -1
+    desert = 1.9
+    grass = 2.1
     homeTile = 1
     main()
     return
 def Pange():
     print("Pange")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 2.1
+    grass = 2
+    homeTile = 2
     main()
     return
 def Ocean():
     print("Pange")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -1
+    desert = 0
+    grass = -0.5
+    homeTile = 2
     main()
     return
 
@@ -129,14 +165,26 @@ def save_grid_to_csv(grid, filename):
 def color_from_noise(x, y):
     noise_value = (noise.perlin(x * scaleX, y * scaleY, 500, 500)-0.33)*2
     # Return the original color based on noise value
-    if noise_value < mountain:
-        return 'grey'
-    elif noise_value < grass:
-        return 'green'
-    elif noise_value < desert:
-        return 'yellow'
+    if homeTile == 2:
+        if noise_value < mountain:
+            return 'grey'
+        elif noise_value < grass:
+            return 'green'
+        elif noise_value < desert:
+            return 'yellow'
+        else:
+            return 'blue'
+    elif homeTile == 1:
+        if noise_value < mountain:
+            return 'grey'
+        elif noise_value < desert:
+            return 'yellow'
+        elif noise_value < grass:
+            return 'green'
+        else:
+            return 'blue'
     else:
-        return 'blue'
+        print("Mitas ihmetta")
 
 def main():
     saveFile='save.csv'
