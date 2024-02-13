@@ -5,6 +5,82 @@ from hexagonal_grid import HexagonalGrid
 import csv
 import turn_handler
 from csvutils import getRowsFromCsv
+from random import randint
+
+scaleX = 0.05*random.uniform(0.9,1.1)
+scaleY = 0.05*random.uniform(0.1,0.5)
+mountain = -0.8
+desert = 0.5
+grass = 0.2
+homeTile = 2
+scale = 20  # Adjust the scale of the hexagons as needed
+grid_width = 50  # Number of hexagons wide
+grid_height = 25  # Number of hexagons tall
+
+def Continents():
+    print("Cont")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 0.5
+    grass = 0.2
+    homeTile = 2
+    main()
+    return
+def Desert():
+    print("Deset")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 1.9
+    grass = 2.1
+    homeTile = 1
+    main()
+    return
+def Pange():
+    print("Pange")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 2.1
+    grass = 2
+    homeTile = 2
+    main()
+    return
+def Ocean():
+    print("Pange")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -1
+    desert = 0
+    grass = -0.5
+    homeTile = 2
+    main()
+    return
 
 def get_tile_content_from_csv(filename, x, y):
     reader = getRowsFromCsv(filename)
@@ -18,11 +94,11 @@ def get_tile_content_from_csv(filename, x, y):
     return None
 
 def spawn_unit(filename):
-    check_x =5
+    check_x =1
     check_y =13
     while True: #Hei Sallasmaa
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
-        if tile_content == 2:
+        if tile_content == homeTile:
             print(check_y)
             row_index = check_y * 50 + check_x - 1
             rows = getRowsFromCsv(filename)
@@ -45,11 +121,10 @@ def SetSpawn(filename):
     check_y =13
     while True:
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
-        if tile_content == 2:
+        if tile_content == homeTile:
             print(check_y)
             row_index = check_y * 50 + check_x - 1    
-            with open(filename, 'r', newline='') as csvfile:
-                rows = list(csv.reader(csvfile))
+            rows = getRowsFromCsv(filename)
             if 0 <= row_index < len(rows):
                 row = rows[row_index]
                 if len(row) >= 5:
@@ -63,6 +138,9 @@ def SetSpawn(filename):
             check_y -=1
         else:
             check_y = 25
+
+def SetWinTile(filename):
+    tile_content = get_tile_content_from_csv(filename, check_x, check_y)
 
 def color_to_number(color):
     if color == 'blue':
@@ -88,45 +166,43 @@ def save_grid_to_csv(grid, filename):
 
 
 # Color mapping based on Perlin noise value and surrounding tiles
-def color_from_noise(x, y, grid):
-    scale = 0.05  # Adjust the scale to control the noise frequency
-    noise_value = (noise.perlin(x * scale*random.uniform(0.9,1.1), y * scale*random.uniform(0.1,0.5), 500, 500)-0.33)*2
+def color_from_noise(x, y):
+    noise_value = (noise.perlin(x * scaleX, y * scaleY, 500, 500)-0.33)*2
     # Return the original color based on noise value
-    if noise_value < -0.8:
-        return 'grey'
-    elif noise_value < 0.2:
-        return 'green'
-    elif noise_value < 0.3:
-        return 'yellow'
+    if homeTile == 2:
+        if noise_value < mountain:
+            return 'grey'
+        elif noise_value < grass:
+            return 'green'
+        elif noise_value < desert:
+            return 'yellow'
+        else:
+            return 'blue'
+    elif homeTile == 1:
+        if noise_value < mountain:
+            return 'grey'
+        elif noise_value < desert:
+            return 'yellow'
+        elif noise_value < grass:
+            return 'green'
+        else:
+            return 'blue'
     else:
-        return 'blue'
+        print("Mitas ihmetta")
 
-
-if __name__ == "__main__":
-    tk = Tk()
-    
+def main():
     saveFile='save.csv'
-    scale = 20  # Adjust the scale of the hexagons as needed
-    grid_width = 50  # Number of hexagons wide
-    grid_height = 25  # Number of hexagons tall
-
-    grid = HexagonalGrid(tk, scale, grid_width, grid_height)
+    grid = HexagonalGrid(Tk(), scale, grid_width, grid_height)
     grid.grid(row=0, column=0, padx=5, pady=5)
-    
-    def correct_quit(tk):
-        tk.destroy()
-        tk.quit()
-
-    quit_button = Button(tk, text="Quit", command=lambda: correct_quit(tk))
-    quit_button.grid(row=1, column=0)
 
     for x in range(grid_width):
         for y in range(grid_height):
-            color = color_from_noise(x, y, grid)  # Pass the grid parameter
+            color = color_from_noise(x, y)  # Pass the grid parameter
             grid.setCell(x, y, fill=color)
     save_grid_to_csv(grid, saveFile)
 
     spawn_unit(saveFile)
     SetSpawn(saveFile)
     turn_handler.write_current_turn('save.csv', 1)
-    tk.mainloop()
+if __name__ == "__main__":
+    main()

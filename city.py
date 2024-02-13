@@ -51,9 +51,7 @@ def checkProduhiton(x, y, filename):
     adjacentEven_coords = [(x-1, y), (x+1, y), (x, y-1), (x, y+1), (x-1, y+1), (x-1, y-1)]
     adjacentOdd_coords = [(x-1, y), (x+1, y), (x, y-1), (x, y+1), (x+1, y+1), (x+1, y-1)]
 
-    with open(filename, 'r', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-        rows = list(reader)
+    rows = getRowsFromCsv(filename)
 
     adjacent_coords = adjacentEven_coords if y % 2 == 0 else adjacentOdd_coords
 

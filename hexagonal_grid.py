@@ -1,7 +1,8 @@
 from tkinter import *
 
 class HexaCanvas(Canvas):
-    """ A canvas that provides a create-hexagone method """
+    print("sika")
+
     def __init__(self, master, *args, **kwargs):
         Canvas.__init__(self, master, *args, **kwargs)
     
@@ -12,35 +13,7 @@ class HexaCanvas(Canvas):
     
     
     def create_hexagone(self, x, y, color="black", fill="blue", color1=None, color2=None, color3=None, color4=None, color5=None, color6=None):
-        """ 
-        Compute coordinates of 6 points relative to a center position.
-        Point are numbered following this schema :
-    
-        Points in euclidiean grid:  
-                    6
-                    
-                5       1
-                    .
-                4       2
-            
-                    3
-    
-        Each color is applied to the side that link the vertex with same number to its following.
-        Ex : color 1 is applied on side (vertex1, vertex2)
-    
-        Take care that tkinter ordinate axes is inverted to the standard euclidian ones.
-        Point on the screen will be horizontally mirrored.
-        Displayed points:
-    
-                    3
-              color3/      \color2      
-                4       2
-            color4|     |color1
-                5       1
-              color6\      /color6
-                    6
-        
-        """
+
         size = self.hexaSize
         Δx = (size**2 - (size/2)**2)**0.5
     
@@ -76,6 +49,7 @@ class HexaCanvas(Canvas):
             self.create_polygon(point1, point2, point3, point4, point5, point6, fill=fill)
     
 class HexagonalGrid(HexaCanvas):
+    print("kettu")
     """ A grid whose each cell is hexagonal """
     def __init__(self, master, scale, grid_width, grid_height, *args, **kwargs):
     

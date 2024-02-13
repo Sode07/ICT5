@@ -9,24 +9,13 @@ def baseUI(root, filename):
     EndTurnButton = tk.Button(button_frame, text="End Turn", command=lambda: TH.endTurn(filename))
     EndTurnButton.grid(row=0, column=0, padx=10, pady=10)
     
-def settlerUI(root, grid, filename, xCell, yCell, a):
-    if a == 1:
-        button_frame = tk.Frame(root)
-        button_frame.grid(row=1, column=1)  # Example row and column numbers
+def settlerUI(root, grid, filename, xCell, yCell):
+    button_frame = tk.Frame(root)
+    button_frame.grid(row=1, column=1)  # Example row and column numbers
 
-        FoundCityButton = tk.Button(button_frame, text="Found City", command=lambda: city.foundCity(grid, filename, xCell, yCell, FoundCityButton, root))
+    FoundCityButton = tk.Button(button_frame, text="Found City", command=lambda: city.foundCity(grid, filename, xCell, yCell, FoundCityButton, root))
 
-        FoundCityButton.grid(row=0, column=0, padx=10, pady=10)
-    if a == 0:
-        button_frame = tk.Frame(root)
-        button_frame.grid(row=1, column=1)  # Example row and column numbers
-
-        FoundCityButton = tk.Button(button_frame, text="Found City", command=lambda: city.foundCity(grid, filename, xCell, yCell, FoundCityButton, root))
-
-        FoundCityButton.grid(row=0, column=0, padx=10, pady=10)
-        print("Ankka")
-        baseUI(root, filename)
-        FoundCityButton.destroy()
+    FoundCityButton.grid(row=0, column=0, padx=10, pady=10)
 
 def cityUI(root, grid, filename):
     button_frame = tk.Frame(root)
@@ -35,14 +24,11 @@ def cityUI(root, grid, filename):
     buttons_to_destroy = []
 
     Civilian = tk.Button(button_frame, text="Civilian", command=lambda: city.ProduceUnit(0, buttons_to_destroy, grid, filename, root))
-    Melee = tk.Button(button_frame, text="Melee", command=lambda: city.ProduceUnit(1, buttons_to_destroy, grid, filename, root))
-    Ranged = tk.Button(button_frame, text="Boat", command=lambda: city.ProduceUnit(2, buttons_to_destroy, grid, filename, root))
+    EndTurnButton = tk.Button(button_frame, text="End Turn", command=lambda: TH.endTurn(filename))
 
-    Ranged.grid(row=2, column=0, padx=10, pady=10)
-    Melee.grid(row=1, column=0, padx=10, pady=10)
+    EndTurnButton.grid(row=0, column=1, padx=10, pady=10)
     Civilian.grid(row=0, column=0, padx=10, pady=10)
 
-    buttons_to_destroy.extend([Civilian, Melee, Ranged])
+    buttons_to_destroy.extend([Civilian])
 
     print("City selected")
-
