@@ -1,5 +1,6 @@
 import tkinter as tk
 import winsound
+import generate
 from PIL import Image
 
 def get_screen_size():
@@ -39,10 +40,9 @@ winsound.PlaySound('menu.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
 root = tk.Tk()
 
 def play_game():
-    # Add code to start the game here
+    print("Starting game...")
     root.destroy()
     import game
-    print("Starting game...")
 
 def exit_game():
     root.destroy()
@@ -55,6 +55,26 @@ def mute_window():
     # Implement your logic to mute/unmute the window
     winsound.PlaySound(None, winsound.SND_PURGE)
     print("Window muted/unmuted")
+
+def PlayOptions():
+    # Create a new frame for the options menu
+    option_frame = tk.Frame(root)
+    option_frame.pack(expand=True)
+
+    # Create buttons for options
+    fullscreen_button = tk.Button(option_frame, text="New Continents map save", command=generate.Continents, width=20, height=3, font=("Helvetica", 16))
+    pange_button = tk.Button(option_frame, text="New Pangea map save", command=generate.Pange, width=20, height=3, font=("Helvetica", 16))
+    mute_button = tk.Button(option_frame, text="New Desert map save", command=generate.Desert, width=20, height=3, font=("Helvetica", 16))
+    back_button = tk.Button(option_frame, text="New Ocean map save", command=generate.Ocean, width=20, height=3, font=("Helvetica", 16))
+    load_button = tk.Button(option_frame, text="Load saved game", command=play_game, width=20, height=3, font=("Helvetica", 16))
+
+    # Pack buttons into the options menu frame
+    fullscreen_button.grid(row=1, column=1, padx=10, pady=10)
+    mute_button.grid(row=2, column=1, padx=10, pady=10)
+    back_button.grid(row=3, column=1, padx=10, pady=10)
+    load_button.grid(row=4, column=1, padx=10, pady=10)
+    pange_button.grid(row=0, column=1, padx=10, pady=10)
+    return
 
 def show_options():
     options()
@@ -76,7 +96,7 @@ def main():
     button_frame.place(relx=1.0, rely=1.0, anchor='se', x=-20, y=-20)
 
     # Create buttons
-    play_button = tk.Button(button_frame, text="Play", command=play_game, width=20, height=3, font=("Helvetica", 16))
+    play_button = tk.Button(button_frame, text="Play", command=PlayOptions, width=20, height=3, font=("Helvetica", 16))
     exit_button = tk.Button(button_frame, text="Exit", command=exit_game, width=20, height=3, font=("Helvetica", 16))
     options_button = tk.Button(button_frame, text="Options", command=show_options, width=20, height=3, font=("Helvetica", 16))
 

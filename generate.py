@@ -9,16 +9,40 @@ from csvutils import getRowsFromCsv
 scaleX = 0.05*random.uniform(0.9,1.1)
 scaleY = 0.05*random.uniform(0.1,0.5)
 mountain = -0.8
-desert = 0.3
+desert = 0.5
 grass = 0.2
+homeTile = 2
+scale = 20  # Adjust the scale of the hexagons as needed
+grid_width = 50  # Number of hexagons wide
+grid_height = 25  # Number of hexagons tall
 
 def Continents():
+    print("Cont")
+    main()
     return
 def Desert():
+    print("Deset")
+    global scaleX 
+    global scaleY 
+    global mountain 
+    global desert
+    global grass 
+    global homeTile
+    scaleX = 0.05*random.uniform(0.9,1.1)
+    scaleY = 0.05*random.uniform(0.1,0.5)
+    mountain = -0.8
+    desert = 0.999
+    grass = -1
+    homeTile = 1
+    main()
     return
-def Hills():
+def Pange():
+    print("Pange")
+    main()
     return
 def Ocean():
+    print("Pange")
+    main()
     return
 
 def get_tile_content_from_csv(filename, x, y):
@@ -37,7 +61,7 @@ def spawn_unit(filename):
     check_y =13
     while True: #Hei Sallasmaa
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
-        if tile_content == 2:
+        if tile_content == homeTile:
             print(check_y)
             row_index = check_y * 50 + check_x - 1
             rows = getRowsFromCsv(filename)
@@ -60,7 +84,7 @@ def SetSpawn(filename):
     check_y =13
     while True:
         tile_content = get_tile_content_from_csv(filename, check_x, check_y)
-        if tile_content == 2:
+        if tile_content == homeTile:
             print(check_y)
             row_index = check_y * 50 + check_x - 1    
             rows = getRowsFromCsv(filename)
@@ -114,24 +138,10 @@ def color_from_noise(x, y):
     else:
         return 'blue'
 
-
-if __name__ == "__main__":
-    tk = Tk()
-    
+def main():
     saveFile='save.csv'
-    scale = 20  # Adjust the scale of the hexagons as needed
-    grid_width = 50  # Number of hexagons wide
-    grid_height = 25  # Number of hexagons tall
-
-    grid = HexagonalGrid(tk, scale, grid_width, grid_height)
+    grid = HexagonalGrid(Tk(), scale, grid_width, grid_height)
     grid.grid(row=0, column=0, padx=5, pady=5)
-    
-    def correct_quit(tk):
-        tk.destroy()
-        tk.quit()
-
-    quit_button = Button(tk, text="Quit", command=lambda: correct_quit(tk))
-    quit_button.grid(row=1, column=0)
 
     for x in range(grid_width):
         for y in range(grid_height):
@@ -142,4 +152,5 @@ if __name__ == "__main__":
     spawn_unit(saveFile)
     SetSpawn(saveFile)
     turn_handler.write_current_turn('save.csv', 1)
-    tk.mainloop()
+if __name__ == "__main__":
+    main()
